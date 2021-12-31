@@ -2,7 +2,7 @@
 
 ## Example page
 
-- link
+- link: [wallet-link-example.vercel.app](wallet-link-example.vercel.app)
 
 ## stack
 
