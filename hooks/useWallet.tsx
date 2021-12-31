@@ -6,15 +6,28 @@ import { LocalStorageKey, WalletConnectorName } from '../constants';
 import { ethers } from 'ethers';
 import { setItem } from '../utils/localStorage';
 
+declare global {
+  interface Window {
+    ethereum: any;
+    web3: any;
+  }
+}
+
 export const useWallet = () => {
   const { activate, deactivate, active, account, connector, library } = useWeb3React();
   const [eth, setEth] = useState('0.0');
 
   const connectMetamaskWallet = async () => {
+    if (typeof window.ethereum === 'undefined' && typeof window.web3 === 'undefined') {
+      alert('need to install METAMASK!');
+
+      return;
+    }
+
     try {
       await activate(injectedConnector);
     } catch (e) {
-      console.log(e);
+      console.log(e, 'hmm?');
     }
   };
 
