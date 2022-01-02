@@ -14,7 +14,7 @@ declare global {
 }
 
 export const useWallet = () => {
-  const { activate, deactivate, active, account, connector, library } = useWeb3React();
+  const { activate, deactivate, active, account, connector, library, chainId } = useWeb3React();
   const [eth, setEth] = useState('0.0');
 
   const connectMetamaskWallet = async () => {
@@ -56,15 +56,20 @@ export const useWallet = () => {
       const connectorName = (connector as WalletConnectConnector).walletConnectProvider
         ? WalletConnectorName.WALLET_CONNECT
         : WalletConnectorName.METAMASK;
-      library.getBalance(account).then((balance: number) => {
-        setEth(ethers.utils.formatEther(balance));
-      });
 
       setItem(LocalStorageKey.CONNECTOR, connectorName);
     } else {
       setItem(LocalStorageKey.CONNECTOR, 'null');
     }
   }, [active]);
+
+  useEffect(() => {
+    if (account && library) {
+      library.getBalance(account).then((balance: number) => {
+        setEth(ethers.utils.formatEther(balance));
+      });
+    }
+  }, [account, chainId, library]);
 
   return {
     eth,

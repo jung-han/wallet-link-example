@@ -3,6 +3,10 @@ import { useWeb3React } from '@web3-react/core';
 import styles from '../styles/Styles.module.css';
 import { useWallet } from '../hooks/useWallet';
 
+const formatAccount = (account?: string | null) => {
+  return account ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}` : '';
+};
+
 const Home: NextPage = () => {
   const { eth, disconnectWallet, connectMetamaskWallet, connectConnectWallet } = useWallet();
   const { active, account } = useWeb3React();
@@ -11,7 +15,7 @@ const Home: NextPage = () => {
     <div>
       {active ? (
         <>
-          <p>account: {account}</p>
+          <p>account: {formatAccount(account)}</p>
           <p>eth: {eth} Eth</p>
           <button onClick={disconnectWallet}>Disconnect</button>
         </>
