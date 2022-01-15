@@ -5,7 +5,7 @@ export const injectedConnector = new InjectedConnector({
   supportedChainIds: [1, 3, 4, 5, 42],
 });
 
-export const walletConnectConnector = new WalletConnectConnector({
+export const walletConnectConnector = () => new WalletConnectConnector({
   infuraId: process.env.INFURAID,
   qrcode: true,
 });

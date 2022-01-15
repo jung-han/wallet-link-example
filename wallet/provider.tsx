@@ -12,7 +12,7 @@ const WalletProvider: FC<{}> = ({ children }) => {
     const connectorName = getItem(LocalStorageKey.CONNECTOR);
     if (connectorName === WalletConnectorName.WALLET_CONNECT) {
       if (!networkActive && !networkError) {
-        activateNetwork(walletConnectConnector)
+        activateNetwork(walletConnectConnector())
           .then(() => {})
           .catch((e) => {
             console.log(e);

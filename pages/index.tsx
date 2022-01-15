@@ -8,7 +8,7 @@ const formatAccount = (account?: string | null) => {
 };
 
 const Home: NextPage = () => {
-  const { eth, disconnectWallet, connectMetamaskWallet, connectConnectWallet } = useWallet();
+  const { eth, disconnectWallet, connectMetamaskWallet, connectWalletConnect } = useWallet();
   const { active, account } = useWeb3React();
 
   return (
@@ -25,9 +25,9 @@ const Home: NextPage = () => {
             <img src="/metamask.svg" />
             <p>METAMASK</p>
           </button>
-          <button className={styles.walletItem} onClick={connectConnectWallet}>
+          <button className={styles.walletItem} onClick={connectWalletConnect}>
             <img src="/WalletConnect.svg" />
-            <p>WALLETCONNECT</p>
+            <p>WALLET CONNECT</p>
           </button>
         </>
       )}

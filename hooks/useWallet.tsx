@@ -26,18 +26,16 @@ export const useWallet = () => {
 
     try {
       await activate(injectedConnector);
+      setItem(LocalStorageKey.CONNECTOR, WalletConnectorName.METAMASK);
     } catch (e) {
       console.log(e, 'hmm?');
     }
   };
 
-  const connectConnectWallet = async () => {
-    // https://github.com/NoahZinsmeister/web3-react/issues/217
-    // @ts-ignore
-    connector?.walletConnectProvider = undefined;
-
+  const connectWalletConnect = async () => {
     try {
-      await activate(walletConnectConnector);
+      await activate(walletConnectConnector());
+      setItem(LocalStorageKey.CONNECTOR, WalletConnectorName.WALLET_CONNECT);
     } catch (e) {
       console.log(e);
     }
@@ -46,22 +44,11 @@ export const useWallet = () => {
   const disconnectWallet = () => {
     try {
       deactivate();
+      setItem(LocalStorageKey.CONNECTOR, 'null');
     } catch (e) {
       console.log(e);
     }
   };
-
-  useEffect(() => {
-    if (active) {
-      const connectorName = (connector as WalletConnectConnector).walletConnectProvider
-        ? WalletConnectorName.WALLET_CONNECT
-        : WalletConnectorName.METAMASK;
-
-      setItem(LocalStorageKey.CONNECTOR, connectorName);
-    } else {
-      setItem(LocalStorageKey.CONNECTOR, 'null');
-    }
-  }, [active]);
 
   useEffect(() => {
     if (account && library) {
@@ -73,7 +60,7 @@ export const useWallet = () => {
 
   return {
     eth,
-    connectConnectWallet,
+    connectWalletConnect,
     connectMetamaskWallet,
     disconnectWallet,
   };
